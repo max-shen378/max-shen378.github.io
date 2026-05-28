@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Max Shen | GitHub Pages</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1117;
+      --surface:   #161b22;
+      --border:    #30363d;
+      --accent:    #58a6ff;
+      --green:     #3fb950;
+      --muted:     #8b949e;
+      --text:      #e6edf3;
+      --radius:    10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 7rem 2rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--green);
+      letter-spacing: 0.05em;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 560px;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.6rem 1.3rem;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* SECTION SHARED */
+    section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    section h2 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 600px) { .about-grid { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: var(--accent); }
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+    .card p, .card ul { font-size: 0.9rem; color: var(--muted); }
+    .card ul { padding-left: 1.1rem; }
+    .card ul li { margin-bottom: 0.25rem; }
+
+    /* REPOS */
+    .repo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 600px) { .repo-grid { grid-template-columns: 1fr; } }
+    .repo-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.3rem 1.5rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .repo-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .repo-card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .repo-card-desc { font-size: 0.85rem; color: var(--muted); }
+    .repo-badge {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-block;
+    }
+
+    /* ASSIGNMENT */
+    .assignment-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.8rem;
+    }
+    .assignment-box h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .check-icon {
+      color: var(--green);
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* CURSOR BLINK */
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.1em;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* FADE-IN */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+    .delay-3 { animation-delay: 0.45s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-brand" href="#">~/max-shen</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#repos">Repos</a></li>
+      <li><a href="#assignment">Assignment</a></li>
+      <li><a href="https://github.com/max-shen378" target="_blank">GitHub</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-tag fade-in">// hello, world</p>
+    <h1 class="fade-in delay-1">Hi, I'm <span>Max Shen</span><span class="cursor"></span></h1>
+    <p class="hero-sub fade-in delay-2">
+      Computer Science student passionate about software development, open-source, and building things that matter.
+    </p>
+    <div class="hero-cta fade-in delay-3">
+      <a class="btn btn-primary" href="https://github.com/max-shen378" target="_blank">
+        View GitHub Profile
+      </a>
+      <a class="btn btn-outline" href="#about">About Me</a>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">01 / about</p>
+    <h2>About Me</h2>
+    <div class="about-grid">
+      <div class="card">
+        <h3>Introduction</h3>
+        <p>
+          I'm Max Shen, a Computer Science student exploring web development, algorithms, and software engineering.
+          This GitHub Pages site serves as my personal home on the web — a place to share my projects and learning journey.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Interests</h3>
+        <ul>
+          <li>Web Development</li>
+          <li>Algorithms & Data Structures</li>
+          <li>Open Source Contribution</li>
+          <li>Version Control & DevOps</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Current Focus</h3>
+        <p>
+          Studying CS fundamentals including Git &amp; GitHub workflows, static site hosting, Markdown documentation, and collaborative software development practices.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Contact</h3>
+        <p>
+          GitHub: <a href="https://github.com/max-shen378" target="_blank" style="color:var(--accent);text-decoration:none;">@max-shen378</a><br />
+          Email: max.shen0306@gmail.com
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- REPOS -->
+  <section id="repos">
+    <p class="section-label">02 / repositories</p>
+    <h2>My Repositories</h2>
+    <div class="repo-grid">
+      <a class="repo-card" href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">
+        <span class="repo-card-title">max-shen378.github.io</span>
+        <span class="repo-card-desc">Personal GitHub Pages website — my public home on the web, built with HTML &amp; CSS.</span>
+        <span class="repo-badge"><span class="dot" style="background:#f1e05a;"></span> HTML</span>
+      </a>
+      <a class="repo-card" href="https://github.com/max-shen378/11402_CS351" target="_blank">
+        <span class="repo-card-title">11402_CS351</span>
+        <span class="repo-card-desc">Course repository for CS351 — contains assignments, notes, and documentation in Markdown.</span>
+        <span class="repo-badge"><span class="dot" style="background:#e34c26;"></span> Markdown / Docs</span>
+      </a>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- ASSIGNMENT -->
+  <section id="assignment">
+    <p class="section-label">03 / cs351 assignment i</p>
+    <h2>Assignment I Checklist</h2>
+    <div class="assignment-box">
+      <h3>Git, GitHub &amp; Markdown Fundamentals</h3>
+      <ul class="checklist">
+        <li><span class="check-icon">&#10003;</span> GitHub account created and profile updated (name, avatar, bio)</li>
+        <li><span class="check-icon">&#10003;</span> Personal website repository <code style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:0.85em;">max-shen378.github.io</code> created with README.md</li>
+        <li><span class="check-icon">&#10003;</span> Course repository <code style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:0.85em;">11402_CS351</code> created with README.md</li>
+        <li><span class="check-icon">&#10003;</span> README.md written with personal introduction and documentation</li>
+        <li><span class="check-icon">&#10003;</span> GitHub Pages site published at <a href="https://max-shen378.github.io" style="color:var(--accent);">max-shen378.github.io</a></li>
+        <li><span class="check-icon">&#10003;</span> Submission form completed with all required URLs</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      Built by <a href="https://github.com/max-shen378">@max-shen378</a> &nbsp;&middot;&nbsp;
+      Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a> &nbsp;&middot;&nbsp;
+      <a href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">View Source</a>
+    </p>
+  </footer>
+
+</body>
+</html>
