@@ -198,32 +198,81 @@
       display: inline-block;
     }
 
-    /* ASSIGNMENT */
-    .assignment-box {
+    /* SKILLS */
+    .skills-group { margin-bottom: 1.8rem; }
+    .skills-group:last-child { margin-bottom: 0; }
+    .skills-group-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-left: 3px solid var(--green);
-      border-radius: var(--radius);
-      padding: 1.5rem 1.8rem;
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
     }
-    .assignment-box h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
-    .checklist { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
-    .checklist li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-    .check-icon {
-      color: var(--green);
-      font-size: 0.95rem;
+    .chip:hover { border-color: var(--accent); color: var(--accent); }
+    .chip-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
       flex-shrink: 0;
-      margin-top: 0.05rem;
+    }
+
+    /* PROJECTS */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .project-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .project-icon { font-size: 1.1rem; }
+    .project-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .project-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      flex: 1;
+      line-height: 1.6;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
+    .tag {
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(88,166,255,0.1);
+      color: var(--accent);
+      border-radius: 4px;
+      padding: 0.2rem 0.5rem;
     }
 
     /* FOOTER */
@@ -269,6 +318,8 @@
     <a class="nav-brand" href="#">~/max-shen</a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
       <li><a href="#repos">Repos</a></li>
       <li><a href="https://github.com/max-shen378" target="_blank">GitHub</a></li>
     </ul>
@@ -330,9 +381,103 @@
 
   <hr class="divider" />
 
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-label">02 / skills</p>
+    <h2>Skills</h2>
+
+    <div class="skills-group">
+      <p class="skills-group-label">Languages</p>
+      <div class="skill-chips">
+        <span class="chip"><span class="chip-dot" style="background:#00599c;"></span>C++</span>
+        <span class="chip"><span class="chip-dot" style="background:#3572a5;"></span>Python</span>
+        <span class="chip"><span class="chip-dot" style="background:#f1e05a;"></span>HTML</span>
+        <span class="chip"><span class="chip-dot" style="background:#563d7c;"></span>CSS</span>
+        <span class="chip"><span class="chip-dot" style="background:#f7df1e;"></span>JavaScript</span>
+        <span class="chip"><span class="chip-dot" style="background:#3fb950;"></span>Markdown</span>
+        <span class="chip"><span class="chip-dot" style="background:#e38c00;"></span>SQL</span>
+      </div>
+    </div>
+
+    <div class="skills-group">
+      <p class="skills-group-label">Tools &amp; Platforms</p>
+      <div class="skill-chips">
+        <span class="chip"><span class="chip-dot" style="background:#f05032;"></span>Git</span>
+        <span class="chip"><span class="chip-dot" style="background:#58a6ff;"></span>GitHub</span>
+        <span class="chip"><span class="chip-dot" style="background:#58a6ff;"></span>GitHub Pages</span>
+        <span class="chip"><span class="chip-dot" style="background:#4584b6;"></span>VS Code</span>
+      </div>
+    </div>
+
+    <div class="skills-group">
+      <p class="skills-group-label">Concepts</p>
+      <div class="skill-chips">
+        <span class="chip">Data Structures</span>
+        <span class="chip">Algorithms</span>
+        <span class="chip">Big Data Analysis</span>
+        <span class="chip">REST APIs</span>
+        <span class="chip">Version Control</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">03 / projects</p>
+    <h2>Projects</h2>
+    <div class="project-grid">
+
+      <a class="project-card" href="https://github.com/max-shen378/clash-big-data" target="_blank">
+        <div class="project-card-header">
+          <span class="project-icon">&#128202;</span>
+          <span class="project-title">Clash Big Data</span>
+        </div>
+        <p class="project-desc">Full-stack big data analysis app for Clash game statistics. Features a data pipeline, backend API, and web frontend to ingest, process, and visualize player trends.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">HTML</span>
+          <span class="tag">Data Pipeline</span>
+          <span class="tag">REST API</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/max-shen378/File_Compressor_Converter" target="_blank">
+        <div class="project-card-header">
+          <span class="project-icon">&#128196;</span>
+          <span class="project-title">File Compressor &amp; Converter</span>
+        </div>
+        <p class="project-desc">Web app for compressing and converting files in the browser. Uses Web Workers for background processing, supports batch compression with adjustable levels and async format conversion.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">Web Workers</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/max-shen378/11402_CS5351_ProjectB" target="_blank">
+        <div class="project-card-header">
+          <span class="project-icon">&#128451;</span>
+          <span class="project-title">CSV Query Engine</span>
+        </div>
+        <p class="project-desc">Lightweight in-memory database engine that ingests CSV files and executes SQL-like queries — including WHERE filters, aggregations (COUNT, SUM, AVG), JOINs, and ORDER BY.</p>
+        <div class="project-tags">
+          <span class="tag">C++</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Data Structures</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
   <!-- REPOS -->
   <section id="repos">
-    <p class="section-label">02 / repositories</p>
+    <p class="section-label">04 / repositories</p>
     <h2>My Repositories</h2>
     <div class="repo-grid">
       <a class="repo-card" href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">
