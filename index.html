@@ -230,51 +230,6 @@
       flex-shrink: 0;
     }
 
-    /* PROJECTS */
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.2rem;
-    }
-    .project-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.4rem 1.5rem;
-      text-decoration: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      transition: border-color 0.2s, transform 0.15s;
-    }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .project-card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .project-icon { font-size: 1.1rem; }
-    .project-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .project-desc {
-      font-size: 0.85rem;
-      color: var(--muted);
-      flex: 1;
-      line-height: 1.6;
-    }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.2rem; }
-    .tag {
-      font-size: 0.72rem;
-      font-family: 'JetBrains Mono', monospace;
-      background: rgba(88,166,255,0.1);
-      color: var(--accent);
-      border-radius: 4px;
-      padding: 0.2rem 0.5rem;
-    }
-
     /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
@@ -319,7 +274,6 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
-      <li><a href="#projects">Projects</a></li>
       <li><a href="#repos">Repos</a></li>
       <li><a href="https://github.com/max-shen378" target="_blank">GitHub</a></li>
     </ul>
@@ -423,61 +377,9 @@
 
   <hr class="divider" />
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <p class="section-label">03 / projects</p>
-    <h2>Projects</h2>
-    <div class="project-grid">
-
-      <a class="project-card" href="https://github.com/max-shen378/clash-big-data" target="_blank">
-        <div class="project-card-header">
-          <span class="project-icon">&#128202;</span>
-          <span class="project-title">Clash Big Data</span>
-        </div>
-        <p class="project-desc">Full-stack big data analysis app for Clash game statistics. Features a data pipeline, backend API, and web frontend to ingest, process, and visualize player trends.</p>
-        <div class="project-tags">
-          <span class="tag">Python</span>
-          <span class="tag">HTML</span>
-          <span class="tag">Data Pipeline</span>
-          <span class="tag">REST API</span>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://github.com/max-shen378/File_Compressor_Converter" target="_blank">
-        <div class="project-card-header">
-          <span class="project-icon">&#128196;</span>
-          <span class="project-title">File Compressor &amp; Converter</span>
-        </div>
-        <p class="project-desc">Web app for compressing and converting files in the browser. Uses Web Workers for background processing, supports batch compression with adjustable levels and async format conversion.</p>
-        <div class="project-tags">
-          <span class="tag">HTML</span>
-          <span class="tag">CSS</span>
-          <span class="tag">JavaScript</span>
-          <span class="tag">Web Workers</span>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://github.com/max-shen378/11402_CS5351_ProjectB" target="_blank">
-        <div class="project-card-header">
-          <span class="project-icon">&#128451;</span>
-          <span class="project-title">CSV Query Engine</span>
-        </div>
-        <p class="project-desc">Lightweight in-memory database engine that ingests CSV files and executes SQL-like queries — including WHERE filters, aggregations (COUNT, SUM, AVG), JOINs, and ORDER BY.</p>
-        <div class="project-tags">
-          <span class="tag">C++</span>
-          <span class="tag">SQL</span>
-          <span class="tag">Data Structures</span>
-        </div>
-      </a>
-
-    </div>
-  </section>
-
-  <hr class="divider" />
-
   <!-- REPOS -->
   <section id="repos">
-    <p class="section-label">04 / repositories</p>
+    <p class="section-label">03 / repositories</p>
     <h2>My Repositories</h2>
     <div class="repo-grid">
       <a class="repo-card" href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">
