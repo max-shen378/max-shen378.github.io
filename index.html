@@ -5,22 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Max Shen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #fafaf8;
-      --surface:   #ffffff;
-      --surface2:  #f2f2ef;
-      --border:    #e4e4e0;
-      --text:      #111110;
-      --muted:     #78786e;
-      --accent:    #0055d4;
-      --accent-bg: rgba(0,85,212,0.07);
-      --radius:    12px;
-      --shadow:    0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
-      --shadow-hover: 0 2px 8px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.07);
+      --bg:           #090909;
+      --surface:      #111111;
+      --surface2:     #1a1a1a;
+      --border:       rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.16);
+      --text:         #f0f0ee;
+      --muted:        #666660;
+      --muted2:       #999990;
+      --accent:       #5b9bff;
+      --accent-glow:  rgba(91,155,255,0.18);
+      --green:        #22c55e;
+      --radius:       14px;
     }
 
     html { scroll-behavior: smooth; }
@@ -32,450 +33,684 @@
       font-size: 15px;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     a { color: inherit; text-decoration: none; }
 
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(250, 250, 248, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: 780px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      height: 56px;
+    /* ─── TOP BAR ─── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 1rem 1.75rem;
+      pointer-events: none;
     }
-    .nav-brand {
-      font-weight: 600;
-      font-size: 0.95rem;
-      letter-spacing: -0.01em;
-      color: var(--text);
-    }
-    .nav-links {
-      display: flex;
-      gap: 0.25rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--muted);
-      font-size: 0.875rem;
+    .topbar-location {
+      font-size: 0.78rem;
       font-weight: 500;
-      padding: 0.3rem 0.75rem;
-      border-radius: 8px;
+      color: var(--muted2);
+      letter-spacing: 0.02em;
+      pointer-events: auto;
+    }
+    .topbar-clock {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted2);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── PILL NAV ─── */
+    nav {
+      position: fixed;
+      top: 0.85rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+      background: rgba(18, 18, 18, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 999px;
+      padding: 0.35rem 0.5rem;
+    }
+    .nav-home {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      transition: background 0.15s;
+      margin-right: 0.2rem;
+    }
+    .nav-home:hover { background: rgba(255,255,255,0.14); }
+    .nav-home svg { width: 15px; height: 15px; }
+    .nav-links { display: flex; gap: 0.1rem; list-style: none; }
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--muted2);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
       transition: background 0.15s, color 0.15s;
     }
     .nav-links a:hover {
-      background: var(--surface2);
+      background: rgba(255,255,255,0.07);
       color: var(--text);
     }
+    .nav-links svg { width: 13px; height: 13px; opacity: 0.7; }
 
-    /* ── PAGE WRAPPER ── */
-    .page {
-      max-width: 780px;
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated gradient mesh */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -5%, rgba(91,155,255,0.11) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(120,80,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 35% at 10% 90%, rgba(0,200,150,0.04) 0%, transparent 55%);
+      pointer-events: none;
+      animation: gradientShift 10s ease-in-out infinite alternate;
+    }
+    @keyframes gradientShift {
+      0%   { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.7; transform: scale(1.06); }
+    }
+
+    /* Subtle grid pattern */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      padding: 0.3rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted2);
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+    .hero-badge-sep {
+      width: 1px; height: 12px;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      max-width: 820px;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, #fff 30%, #5b9bff 70%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted2);
+      max-width: 520px;
+      line-height: 1.8;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--text);
+      color: var(--bg);
+      border-radius: 999px;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: transparent;
+      color: var(--muted2);
+      border: 1px solid var(--border-hover);
+      border-radius: 999px;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: border-color 0.15s, color 0.15s, transform 0.15s;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.3); color: var(--text); transform: translateY(-1px); }
+    .btn-primary svg, .btn-secondary svg { width: 16px; height: 16px; }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      animation: bounce 2.5s ease-in-out infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+    .hero-scroll-hint svg { width: 16px; height: 16px; opacity: 0.4; }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section-wrap {
+      max-width: 860px;
       margin: 0 auto;
       padding: 0 2rem;
     }
 
-    /* ── HERO / ABOUT ── */
-    .hero {
-      padding: 5rem 0 4rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+    /* ─── REVEAL ANIMATION ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1);
     }
-    .avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #0055d4 0%, #00b4d8 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: -0.02em;
-      flex-shrink: 0;
-      border: 3px solid var(--border);
-    }
-    .hero-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-    .location-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 0.25rem 0.75rem;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--muted);
-    }
-    .status-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.45} }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
 
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 2.75rem);
-      font-weight: 700;
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-      color: var(--text);
+    /* ─── DIVIDER ─── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 860px;
+      margin: 0 auto;
     }
-    .hero-role {
-      font-size: 1rem;
-      color: var(--muted);
-      font-weight: 400;
-      margin-top: -0.5rem;
-    }
-    .hero-bio {
-      font-size: 1rem;
-      color: var(--muted);
-      max-width: 560px;
-      line-height: 1.75;
-    }
-    .hero-links {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-    .icon-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      border-radius: 8px;
-      padding: 0.45rem 1rem;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--text);
-      transition: box-shadow 0.15s, border-color 0.15s;
-    }
-    .icon-btn:hover {
-      border-color: #aaa;
-      box-shadow: var(--shadow);
-    }
-    .icon-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
 
-    /* ── DIVIDER ── */
-    hr { border: none; border-top: 1px solid var(--border); }
-
-    /* ── SECTIONS ── */
-    section { padding: 3.5rem 0; }
+    /* ─── SECTIONS ─── */
+    .section { padding: 5rem 0; }
     .section-eyebrow {
       font-size: 0.7rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
-    section h2 {
-      font-size: 1.45rem;
+    .section h2 {
+      font-size: 1.85rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+      color: var(--text);
     }
 
-    /* ── SKILLS ── */
-    .skills-stack { display: flex; flex-direction: column; gap: 1.4rem; }
-    .skill-row { display: flex; flex-direction: column; gap: 0.6rem; }
+    /* ─── ABOUT CARDS ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media (max-width: 600px) { .about-grid { grid-template-columns: 1fr; } }
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.6rem;
+      transition: border-color 0.2s;
+    }
+    .info-card:hover { border-color: var(--border-hover); }
+    .info-card h3 {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.6rem;
+    }
+    .info-card p, .info-card ul {
+      font-size: 0.9rem;
+      color: var(--muted2);
+      line-height: 1.7;
+    }
+    .info-card ul { padding-left: 1rem; }
+    .info-card ul li { margin-bottom: 0.2rem; }
+    .info-card a { color: var(--accent); }
+
+    /* ─── SKILLS ─── */
+    .skills-stack { display: flex; flex-direction: column; gap: 1.8rem; }
     .skill-row-label {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 600;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
     }
     .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .chip {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.38rem;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 999px;
-      padding: 0.3rem 0.85rem;
-      font-size: 0.82rem;
+      padding: 0.32rem 0.9rem;
+      font-size: 0.81rem;
       font-weight: 500;
-      color: var(--text);
-      transition: border-color 0.15s, background 0.15s;
+      color: var(--muted2);
+      transition: border-color 0.18s, color 0.18s, background 0.18s;
       cursor: default;
     }
-    .chip:hover { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
-    .chip-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      flex-shrink: 0;
+    .chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
     }
+    .chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
-    /* ── WORK / PROJECTS ── */
-    .project-list { display: flex; flex-direction: column; gap: 1rem; }
-    .project-card {
+    /* ─── FEATURED WORK ─── */
+    .featured-card {
+      display: block;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: 18px;
       overflow: hidden;
       text-decoration: none;
-      display: block;
-      transition: box-shadow 0.2s, border-color 0.2s, transform 0.18s;
+      position: relative;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.22s;
     }
-    .project-card:hover {
-      box-shadow: var(--shadow-hover);
-      border-color: #ccc;
-      transform: translateY(-2px);
+    .featured-card:hover {
+      border-color: rgba(91,155,255,0.35);
+      box-shadow: 0 0 0 1px rgba(91,155,255,0.12), 0 20px 60px rgba(0,0,0,0.4);
+      transform: translateY(-3px);
     }
-    .project-banner {
-      height: 120px;
+    .featured-banner {
+      height: 200px;
+      background: linear-gradient(135deg, #0d1117 0%, #1c2a3a 40%, #0d2137 70%, #051020 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
       position: relative;
       overflow: hidden;
     }
-    .project-banner::after {
+    .featured-banner::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.08));
+      background:
+        radial-gradient(ellipse 60% 70% at 70% 30%, rgba(91,155,255,0.2), transparent 60%),
+        radial-gradient(ellipse 40% 50% at 20% 80%, rgba(56,189,248,0.1), transparent 50%);
     }
-    .project-body {
-      padding: 1.25rem 1.5rem 1.4rem;
+    .featured-banner-icon {
+      font-size: 3.5rem;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 0 24px rgba(91,155,255,0.4));
     }
-    .project-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 0.5rem;
-    }
-    .project-title {
-      font-size: 1rem;
-      font-weight: 650;
-      letter-spacing: -0.01em;
-      color: var(--text);
-    }
-    .arrow-icon {
-      color: var(--muted);
-      font-size: 1rem;
-      flex-shrink: 0;
-      transition: transform 0.15s, color 0.15s;
-    }
-    .project-card:hover .arrow-icon { transform: translate(2px, -2px); color: var(--text); }
-    .project-desc {
-      font-size: 0.875rem;
-      color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 1rem;
-    }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .tag {
+    .featured-body { padding: 1.8rem 2rem 2rem; }
+    .featured-eyebrow {
       font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+    }
+    .featured-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 0.8rem;
+    }
+    .featured-desc {
+      font-size: 0.9rem;
+      color: var(--muted2);
+      line-height: 1.75;
+      margin-bottom: 1.4rem;
+      max-width: 560px;
+    }
+    .featured-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .featured-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.73rem;
       font-weight: 500;
       background: var(--surface2);
-      color: var(--muted);
+      color: var(--muted2);
+      border: 1px solid var(--border);
       border-radius: 6px;
-      padding: 0.2rem 0.55rem;
+      padding: 0.22rem 0.6rem;
     }
+    .featured-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+      border: 1px solid rgba(91,155,255,0.25);
+      border-radius: 999px;
+      padding: 0.38rem 1rem;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .featured-link:hover { background: var(--accent-glow); border-color: var(--accent); }
+    .featured-link svg { width: 13px; height: 13px; }
 
-    /* ── REPOS ── */
+    /* ─── REPOS ─── */
     .repo-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.9rem;
+      gap: 1rem;
     }
     @media (max-width: 560px) { .repo-grid { grid-template-columns: 1fr; } }
     .repo-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 1.2rem 1.4rem;
-      text-decoration: none;
+      padding: 1.3rem 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
-      transition: box-shadow 0.18s, border-color 0.18s, transform 0.18s;
+      gap: 0.45rem;
+      transition: border-color 0.2s, transform 0.18s, box-shadow 0.2s;
     }
     .repo-card:hover {
-      box-shadow: var(--shadow-hover);
-      border-color: #ccc;
+      border-color: var(--border-hover);
       transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
-    .repo-name {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--accent);
-      letter-spacing: -0.01em;
-    }
-    .repo-desc { font-size: 0.82rem; color: var(--muted); }
+    .repo-name { font-size: 0.875rem; font-weight: 600; color: var(--accent); }
+    .repo-desc { font-size: 0.82rem; color: var(--muted2); }
     .repo-lang {
       margin-top: 0.3rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.38rem;
       font-size: 0.75rem;
       color: var(--muted);
     }
-    .lang-dot {
-      width: 9px; height: 9px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .lang-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
 
-    /* ── FOOTER ── */
+    /* ─── FOOTER ─── */
     footer {
       border-top: 1px solid var(--border);
       padding: 2.5rem 0;
     }
     .footer-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 1rem;
     }
-    .footer-copy {
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-    .footer-links {
-      display: flex;
-      gap: 1rem;
-    }
-    .footer-links a {
-      font-size: 0.82rem;
-      color: var(--muted);
-      transition: color 0.15s;
-    }
+    .footer-copy { font-size: 0.8rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 1.2rem; }
+    .footer-links a { font-size: 0.8rem; color: var(--muted); transition: color 0.15s; }
     .footer-links a:hover { color: var(--text); }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 560px) {
-      .hero { padding: 3.5rem 0 3rem; }
-      .nav-links { gap: 0; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 640px) {
+      .hero h1 { letter-spacing: -0.03em; }
+      .nav-links a span { display: none; }
+      .topbar-location { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <span class="topbar-location">Taiwan</span>
+    <span class="topbar-clock" id="clock"></span>
+  </div>
+
+  <!-- PILL NAV -->
   <nav>
-    <div class="nav-inner">
-      <span class="nav-brand">Max Shen</span>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#repos">Repos</a></li>
-      </ul>
-    </div>
+    <a class="nav-home" href="#">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </a>
+    <ul class="nav-links">
+      <li>
+        <a href="#about">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 10-16 0"/></svg>
+          <span>About</span>
+        </a>
+      </li>
+      <li>
+        <a href="#work">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span>Work</span>
+        </a>
+      </li>
+      <li>
+        <a href="#skills">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          <span>Skills</span>
+        </a>
+      </li>
+      <li>
+        <a href="#repos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          <span>Repos</span>
+        </a>
+      </li>
+    </ul>
   </nav>
 
-  <div class="page">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
 
-    <!-- HERO / ABOUT -->
-    <div class="hero" id="about">
-      <div class="avatar">MS</div>
-
-      <div class="hero-meta">
-        <span class="location-chip">
-          <span class="status-dot"></span>
-          Taiwan
-        </span>
+      <div class="hero-badge" style="animation: fadeUp 0.6s ease both 0.1s; opacity:0;">
+        <span class="hero-badge-dot"></span>
+        <span>Computer Science</span>
+        <span class="hero-badge-sep"></span>
+        <span>Yuan Ze University</span>
       </div>
 
-      <div>
-        <h1>Max Shen</h1>
-        <p class="hero-role">Computer Science Student &mdash; Yuan Ze University</p>
-      </div>
+      <h1 style="animation: fadeUp 0.7s ease both 0.25s; opacity:0;">
+        Building things from<br>
+        <span class="gradient-text">algorithms to interfaces.</span>
+      </h1>
 
-      <p class="hero-bio">
-        Passionate about software development, algorithms, and building things that matter.
-        I enjoy working across the stack &mdash; from low-level C++ to Python data pipelines and web interfaces.
-        Currently exploring Git, GitHub workflows, and collaborative engineering practices.
+      <p class="hero-sub" style="animation: fadeUp 0.7s ease both 0.4s; opacity:0;">
+        I'm Max Shen — a CS student who writes C++, Python, and JavaScript.
+        I build from low-level data structures to full-stack web apps.
       </p>
 
-      <div class="hero-links">
-        <a class="icon-btn" href="https://github.com/max-shen378" target="_blank">
-          <!-- GitHub icon -->
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-          </svg>
+      <div class="hero-cta" style="animation: fadeUp 0.7s ease both 0.55s; opacity:0;">
+        <a class="btn-primary" href="https://github.com/max-shen378" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
           GitHub
         </a>
-        <a class="icon-btn" href="mailto:max.shen0306@gmail.com">
-          <!-- Email icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/>
-          </svg>
-          Email
-        </a>
-        <a class="icon-btn" href="https://github.com/max-shen378/11402_CS351" target="_blank">
-          <!-- Book icon -->
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
-          </svg>
-          CS351
-        </a>
+        <a class="btn-secondary" href="#work">View Work ↓</a>
       </div>
+
     </div>
 
-    <hr />
+    <div class="hero-scroll-hint">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      Scroll
+    </div>
+  </section>
 
-    <!-- SKILLS -->
-    <section id="skills">
-      <p class="section-eyebrow">Skills</p>
+  <!-- ABOUT -->
+  <hr class="divider" />
+  <div class="section" id="about">
+    <div class="section-wrap">
+      <p class="section-eyebrow reveal">About</p>
+      <h2 class="reveal reveal-delay-1">Who I am</h2>
+      <div class="about-grid">
+        <div class="info-card reveal reveal-delay-1">
+          <h3>Background</h3>
+          <p>Computer Science student at Yuan Ze University, Taiwan. I enjoy working across the stack — from systems-level C++ to Python data pipelines and web interfaces.</p>
+        </div>
+        <div class="info-card reveal reveal-delay-2">
+          <h3>Interests</h3>
+          <ul>
+            <li>Algorithms &amp; Data Structures</li>
+            <li>Full-Stack Web Development</li>
+            <li>Data Analysis &amp; Big Data</li>
+            <li>Open Source &amp; Version Control</li>
+          </ul>
+        </div>
+        <div class="info-card reveal reveal-delay-2">
+          <h3>Currently</h3>
+          <p>Studying software engineering tools including Git, GitHub workflows, static site hosting, and collaborative development practices in CS351.</p>
+        </div>
+        <div class="info-card reveal reveal-delay-3">
+          <h3>Contact</h3>
+          <p>
+            <a href="https://github.com/max-shen378" target="_blank">@max-shen378</a> on GitHub<br />
+            max.shen0306@gmail.com
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <hr class="divider" />
+  <div class="section" id="work">
+    <div class="section-wrap">
+      <p class="section-eyebrow reveal">Work</p>
+      <h2 class="reveal reveal-delay-1">Featured Project</h2>
+
+      <a class="featured-card reveal reveal-delay-2" href="https://github.com/max-shen378/11402_CS5351_ProjectB" target="_blank">
+        <div class="featured-banner">
+          <span class="featured-banner-icon">🗃️</span>
+        </div>
+        <div class="featured-body">
+          <p class="featured-eyebrow">C++ · Systems</p>
+          <h3 class="featured-title">CSV Query Engine</h3>
+          <p class="featured-desc">
+            A lightweight in-memory database engine built in C++. Ingests CSV files into typed tables and executes a SQL-like query language — supporting WHERE filters with comparison operators, aggregation functions (COUNT, SUM, AVG, MIN, MAX), multi-table JOINs, column aliasing, and ORDER BY sorting.
+          </p>
+          <div class="featured-footer">
+            <div class="featured-tags">
+              <span class="tag">C++</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Data Structures</span>
+              <span class="tag">Query Parser</span>
+              <span class="tag">Database</span>
+            </div>
+            <span class="featured-link">
+              View on GitHub
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <hr class="divider" />
+  <div class="section" id="skills">
+    <div class="section-wrap">
+      <p class="section-eyebrow reveal">Skills</p>
+      <h2 class="reveal reveal-delay-1">What I work with</h2>
       <div class="skills-stack">
 
-        <div class="skill-row">
-          <span class="skill-row-label">Languages</span>
+        <div class="reveal reveal-delay-1">
+          <p class="skill-row-label">Languages</p>
           <div class="chips">
             <span class="chip"><span class="chip-dot" style="background:#00599c;"></span>C++</span>
             <span class="chip"><span class="chip-dot" style="background:#3572a5;"></span>Python</span>
             <span class="chip"><span class="chip-dot" style="background:#e34c26;"></span>HTML</span>
-            <span class="chip"><span class="chip-dot" style="background:#563d7c;"></span>CSS</span>
+            <span class="chip"><span class="chip-dot" style="background:#7c5cbf;"></span>CSS</span>
             <span class="chip"><span class="chip-dot" style="background:#f1c40f;"></span>JavaScript</span>
             <span class="chip"><span class="chip-dot" style="background:#22c55e;"></span>Markdown</span>
             <span class="chip"><span class="chip-dot" style="background:#e38c00;"></span>SQL</span>
           </div>
         </div>
 
-        <div class="skill-row">
-          <span class="skill-row-label">Tools &amp; Platforms</span>
+        <div class="reveal reveal-delay-2">
+          <p class="skill-row-label">Tools &amp; Platforms</p>
           <div class="chips">
             <span class="chip"><span class="chip-dot" style="background:#f05032;"></span>Git</span>
-            <span class="chip"><span class="chip-dot" style="background:#111;"></span>GitHub</span>
-            <span class="chip"><span class="chip-dot" style="background:#0055d4;"></span>GitHub Pages</span>
+            <span class="chip"><span class="chip-dot" style="background:#ccc;"></span>GitHub</span>
+            <span class="chip"><span class="chip-dot" style="background:#5b9bff;"></span>GitHub Pages</span>
             <span class="chip"><span class="chip-dot" style="background:#007acc;"></span>VS Code</span>
           </div>
         </div>
 
-        <div class="skill-row">
-          <span class="skill-row-label">Concepts</span>
+        <div class="reveal reveal-delay-3">
+          <p class="skill-row-label">Concepts</p>
           <div class="chips">
             <span class="chip">Data Structures</span>
             <span class="chip">Algorithms</span>
@@ -486,120 +721,72 @@
         </div>
 
       </div>
-    </section>
+    </div>
+  </div>
 
-    <hr />
-
-    <!-- WORK -->
-    <section id="work">
-      <p class="section-eyebrow">Work</p>
-      <h2>Selected Projects</h2>
-      <div class="project-list">
-
-        <!-- Project 1 -->
-        <a class="project-card" href="https://github.com/max-shen378/clash-big-data" target="_blank">
-          <div class="project-banner" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);">
-            📊
-          </div>
-          <div class="project-body">
-            <div class="project-header">
-              <span class="project-title">Clash Big Data</span>
-              <span class="arrow-icon">↗</span>
-            </div>
-            <p class="project-desc">
-              Full-stack big data analysis platform for Clash game statistics. Features an automated data pipeline, REST API backend, and interactive web frontend to ingest, process, and visualize player trends.
-            </p>
-            <div class="project-tags">
-              <span class="tag">Python</span>
-              <span class="tag">HTML / CSS</span>
-              <span class="tag">Data Pipeline</span>
-              <span class="tag">REST API</span>
-              <span class="tag">Big Data</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Project 2 -->
-        <a class="project-card" href="https://github.com/max-shen378/File_Compressor_Converter" target="_blank">
-          <div class="project-banner" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #7c3aed 100%);">
-            📄
-          </div>
-          <div class="project-body">
-            <div class="project-header">
-              <span class="project-title">File Compressor &amp; Converter</span>
-              <span class="arrow-icon">↗</span>
-            </div>
-            <p class="project-desc">
-              Browser-based tool for compressing and converting files without a server. Uses Web Workers for background processing, supports batch compression with adjustable levels, async format conversion, and auto-download.
-            </p>
-            <div class="project-tags">
-              <span class="tag">HTML</span>
-              <span class="tag">CSS</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">Web Workers</span>
-              <span class="tag">Team Project</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Project 3 -->
-        <a class="project-card" href="https://github.com/max-shen378/11402_CS5351_ProjectB" target="_blank">
-          <div class="project-banner" style="background: linear-gradient(135deg, #0d1117 0%, #1c2333 50%, #238636 100%);">
-            🗃️
-          </div>
-          <div class="project-body">
-            <div class="project-header">
-              <span class="project-title">CSV Query Engine</span>
-              <span class="arrow-icon">↗</span>
-            </div>
-            <p class="project-desc">
-              Lightweight in-memory database engine built in C++. Ingests CSV files into typed tables and executes SQL-like queries — supporting WHERE filters, aggregations (COUNT, SUM, AVG, MIN, MAX), multi-table JOINs, and ORDER BY.
-            </p>
-            <div class="project-tags">
-              <span class="tag">C++</span>
-              <span class="tag">SQL</span>
-              <span class="tag">Data Structures</span>
-              <span class="tag">Database</span>
-            </div>
-          </div>
-        </a>
-
-      </div>
-    </section>
-
-    <hr />
-
-    <!-- REPOS -->
-    <section id="repos">
-      <p class="section-eyebrow">Repositories</p>
-      <h2>CS351 Course Repos</h2>
+  <!-- REPOS -->
+  <hr class="divider" />
+  <div class="section" id="repos">
+    <div class="section-wrap">
+      <p class="section-eyebrow reveal">Repositories</p>
+      <h2 class="reveal reveal-delay-1">CS351 Course Repos</h2>
       <div class="repo-grid">
-        <a class="repo-card" href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">
+        <a class="repo-card reveal reveal-delay-1" href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">
           <span class="repo-name">max-shen378.github.io</span>
           <span class="repo-desc">Personal GitHub Pages site — this website.</span>
           <span class="repo-lang"><span class="lang-dot" style="background:#e34c26;"></span>HTML</span>
         </a>
-        <a class="repo-card" href="https://github.com/max-shen378/11402_CS351" target="_blank">
+        <a class="repo-card reveal reveal-delay-2" href="https://github.com/max-shen378/11402_CS351" target="_blank">
           <span class="repo-name">11402_CS351</span>
           <span class="repo-desc">Course repository with assignments and Markdown docs.</span>
           <span class="repo-lang"><span class="lang-dot" style="background:#083fa1;"></span>Markdown</span>
         </a>
       </div>
-    </section>
+    </div>
+  </div>
 
-    <!-- FOOTER -->
-    <footer>
-      <div class="footer-inner">
-        <span class="footer-copy">© 2026 Max Shen</span>
-        <div class="footer-links">
-          <a href="https://github.com/max-shen378" target="_blank">GitHub</a>
-          <a href="mailto:max.shen0306@gmail.com">Email</a>
-          <a href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">Source</a>
-        </div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy">© 2026 Max Shen</span>
+      <div class="footer-links">
+        <a href="https://github.com/max-shen378" target="_blank">GitHub</a>
+        <a href="mailto:max.shen0306@gmail.com">Email</a>
+        <a href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">Source</a>
       </div>
-    </footer>
+    </div>
+  </footer>
 
-  </div><!-- /.page -->
+  <script>
+    // ── Hero fade-up keyframe (inline style workaround) ──
+    const style = document.createElement('style');
+    style.textContent = `@keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }`;
+    document.head.appendChild(style);
+
+    // ── Live clock ──
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2,'0');
+      const m = String(now.getMinutes()).padStart(2,'0');
+      const s = String(now.getSeconds()).padStart(2,'0');
+      const el = document.getElementById('clock');
+      if (el) el.textContent = `${h}:${m}:${s}`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ── Scroll reveal (IntersectionObserver) ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
