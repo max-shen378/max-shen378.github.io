@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Max Shen | GitHub Pages</title>
+  <title>Max Shen</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0d1117;
-      --surface:   #161b22;
-      --border:    #30363d;
-      --accent:    #58a6ff;
-      --green:     #3fb950;
-      --muted:     #8b949e;
-      --text:      #e6edf3;
-      --radius:    10px;
+      --bg:        #fafaf8;
+      --surface:   #ffffff;
+      --surface2:  #f2f2ef;
+      --border:    #e4e4e0;
+      --text:      #111110;
+      --muted:     #78786e;
+      --accent:    #0055d4;
+      --accent-bg: rgba(0,85,212,0.07);
+      --radius:    12px;
+      --shadow:    0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+      --shadow-hover: 0 2px 8px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.07);
     }
 
     html { scroll-behavior: smooth; }
@@ -25,384 +28,578 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
       line-height: 1.7;
-      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* NAV */
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ── */
     nav {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(13, 17, 23, 0.85);
-      backdrop-filter: blur(12px);
+      background: rgba(250, 250, 248, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      padding: 0.9rem 2rem;
+    }
+    .nav-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .nav-brand {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1rem;
-      color: var(--accent);
-      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+      color: var(--text);
     }
-    .nav-links { display: flex; gap: 1.8rem; list-style: none; }
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+    }
     .nav-links a {
       color: var(--muted);
-      text-decoration: none;
       font-size: 0.875rem;
       font-weight: 500;
-      transition: color 0.2s;
+      padding: 0.3rem 0.75rem;
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
     }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
 
-    /* HERO */
-    .hero {
-      max-width: 860px;
+    /* ── PAGE WRAPPER ── */
+    .page {
+      max-width: 780px;
       margin: 0 auto;
-      padding: 7rem 2rem 5rem;
+      padding: 0 2rem;
+    }
+
+    /* ── HERO / ABOUT ── */
+    .hero {
+      padding: 5rem 0 4rem;
       display: flex;
       flex-direction: column;
-      gap: 1.4rem;
-    }
-    .hero-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      color: var(--green);
-      letter-spacing: 0.05em;
-    }
-    .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 3.6rem);
-      font-weight: 700;
-      line-height: 1.15;
-    }
-    .hero h1 span { color: var(--accent); }
-    .hero-sub {
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 560px;
-    }
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 0.5rem;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.6rem 1.3rem;
-      border-radius: var(--radius);
-      font-size: 0.9rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: opacity 0.2s, transform 0.15s;
-    }
-    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
-    .btn-primary { background: var(--accent); color: #0d1117; }
-    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* SECTION SHARED */
-    section {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 4rem 2rem;
-    }
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      color: var(--green);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-    section h2 {
-      font-size: 1.7rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-    }
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-    }
-
-    /* ABOUT */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
     }
-    @media (max-width: 600px) { .about-grid { grid-template-columns: 1fr; } }
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.4rem 1.6rem;
-      transition: border-color 0.2s;
-    }
-    .card:hover { border-color: var(--accent); }
-    .card h3 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--accent);
-    }
-    .card p, .card ul { font-size: 0.9rem; color: var(--muted); }
-    .card ul { padding-left: 1.1rem; }
-    .card ul li { margin-bottom: 0.25rem; }
-
-    /* REPOS */
-    .repo-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.2rem;
-    }
-    @media (max-width: 600px) { .repo-grid { grid-template-columns: 1fr; } }
-    .repo-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.3rem 1.5rem;
-      text-decoration: none;
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0055d4 0%, #00b4d8 100%);
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      transition: border-color 0.2s, transform 0.15s;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      flex-shrink: 0;
+      border: 3px solid var(--border);
     }
-    .repo-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-    .repo-card-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.9rem;
-      color: var(--accent);
-      font-weight: 600;
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
     }
-    .repo-card-desc { font-size: 0.85rem; color: var(--muted); }
-    .repo-badge {
-      margin-top: auto;
+    .location-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.45} }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .hero-role {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 400;
+      margin-top: -0.5rem;
+    }
+    .hero-bio {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+    .hero-links {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .icon-btn {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      font-size: 0.75rem;
-      color: var(--muted);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 0.45rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: box-shadow 0.15s, border-color 0.15s;
     }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--accent);
-      display: inline-block;
+    .icon-btn:hover {
+      border-color: #aaa;
+      box-shadow: var(--shadow);
+    }
+    .icon-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ── DIVIDER ── */
+    hr { border: none; border-top: 1px solid var(--border); }
+
+    /* ── SECTIONS ── */
+    section { padding: 3.5rem 0; }
+    .section-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    section h2 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
     }
 
-    /* SKILLS */
-    .skills-group { margin-bottom: 1.8rem; }
-    .skills-group:last-child { margin-bottom: 0; }
-    .skills-group-label {
+    /* ── SKILLS ── */
+    .skills-stack { display: flex; flex-direction: column; gap: 1.4rem; }
+    .skill-row { display: flex; flex-direction: column; gap: 0.6rem; }
+    .skill-row-label {
       font-size: 0.78rem;
       font-weight: 600;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.75rem;
+      letter-spacing: 0.06em;
     }
-    .skill-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .chip {
       display: inline-flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.35rem;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 999px;
-      padding: 0.35rem 0.9rem;
+      padding: 0.3rem 0.85rem;
       font-size: 0.82rem;
-      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
       color: var(--text);
-      transition: border-color 0.2s, color 0.2s;
+      transition: border-color 0.15s, background 0.15s;
+      cursor: default;
     }
-    .chip:hover { border-color: var(--accent); color: var(--accent); }
+    .chip:hover { border-color: var(--accent); background: var(--accent-bg); color: var(--accent); }
     .chip-dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       flex-shrink: 0;
     }
 
-    /* FOOTER */
+    /* ── WORK / PROJECTS ── */
+    .project-list { display: flex; flex-direction: column; gap: 1rem; }
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.18s;
+    }
+    .project-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: #ccc;
+      transform: translateY(-2px);
+    }
+    .project-banner {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.08));
+    }
+    .project-body {
+      padding: 1.25rem 1.5rem 1.4rem;
+    }
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .project-title {
+      font-size: 1rem;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .arrow-icon {
+      color: var(--muted);
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: transform 0.15s, color 0.15s;
+    }
+    .project-card:hover .arrow-icon { transform: translate(2px, -2px); color: var(--text); }
+    .project-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-size: 0.72rem;
+      font-weight: 500;
+      background: var(--surface2);
+      color: var(--muted);
+      border-radius: 6px;
+      padding: 0.2rem 0.55rem;
+    }
+
+    /* ── REPOS ── */
+    .repo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+    @media (max-width: 560px) { .repo-grid { grid-template-columns: 1fr; } }
+    .repo-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: box-shadow 0.18s, border-color 0.18s, transform 0.18s;
+    }
+    .repo-card:hover {
+      box-shadow: var(--shadow-hover);
+      border-color: #ccc;
+      transform: translateY(-2px);
+    }
+    .repo-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+    .repo-desc { font-size: 0.82rem; color: var(--muted); }
+    .repo-lang {
+      margin-top: 0.3rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .lang-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 2rem 1rem;
+      padding: 2.5rem 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy {
       font-size: 0.82rem;
       color: var(--muted);
-      font-family: 'JetBrains Mono', monospace;
     }
-    footer a { color: var(--accent); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+    }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--muted);
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--text); }
 
-    /* CURSOR BLINK */
-    .cursor {
-      display: inline-block;
-      width: 3px;
-      height: 1.1em;
-      background: var(--accent);
-      margin-left: 4px;
-      vertical-align: middle;
-      animation: blink 1s step-end infinite;
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      .hero { padding: 3.5rem 0 3rem; }
+      .nav-links { gap: 0; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
     }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-    /* FADE-IN */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.6s ease forwards;
-    }
-    @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
-    .delay-1 { animation-delay: 0.15s; }
-    .delay-2 { animation-delay: 0.3s; }
-    .delay-3 { animation-delay: 0.45s; }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
   <nav>
-    <a class="nav-brand" href="#">~/max-shen</a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#repos">Repos</a></li>
-      <li><a href="https://github.com/max-shen378" target="_blank">GitHub</a></li>
-    </ul>
+    <div class="nav-inner">
+      <span class="nav-brand">Max Shen</span>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#repos">Repos</a></li>
+      </ul>
+    </div>
   </nav>
 
-  <!-- HERO -->
-  <div class="hero">
-    <p class="hero-tag fade-in">// hello, world</p>
-    <h1 class="fade-in delay-1">Hi, I'm <span>Max Shen</span><span class="cursor"></span></h1>
-    <p class="hero-sub fade-in delay-2">
-      Computer Science student passionate about software development, open-source, and building things that matter.
-    </p>
-    <div class="hero-cta fade-in delay-3">
-      <a class="btn btn-primary" href="https://github.com/max-shen378" target="_blank">
-        View GitHub Profile
-      </a>
-      <a class="btn btn-outline" href="#about">About Me</a>
-    </div>
-  </div>
+  <div class="page">
 
-  <hr class="divider" />
+    <!-- HERO / ABOUT -->
+    <div class="hero" id="about">
+      <div class="avatar">MS</div>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <p class="section-label">01 / about</p>
-    <h2>About Me</h2>
-    <div class="about-grid">
-      <div class="card">
-        <h3>Introduction</h3>
-        <p>
-          I'm Max Shen, a Computer Science student exploring web development, algorithms, and software engineering.
-          This GitHub Pages site serves as my personal home on the web. A place to share my projects and learning journey.
-        </p>
+      <div class="hero-meta">
+        <span class="location-chip">
+          <span class="status-dot"></span>
+          Taiwan
+        </span>
       </div>
-      <div class="card">
-        <h3>Interests</h3>
-        <ul>
-          <li>Web Development</li>
-          <li>Algorithms & Data Structures</li>
-          <li>Open Source Contribution</li>
-          <li>Version Control & DevOps</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3>Current Focus</h3>
-        <p>
-          Studying CS fundamentals including Git &amp; GitHub workflows, static site hosting, Markdown documentation, and collaborative software development practices.
-        </p>
-      </div>
-      <div class="card">
-        <h3>Contact</h3>
-        <p>
-          GitHub: <a href="https://github.com/max-shen378" target="_blank" style="color:var(--accent);text-decoration:none;">@max-shen378</a><br />
-          Email: max.shen0306@gmail.com
-        </p>
-      </div>
-    </div>
-  </section>
 
-  <hr class="divider" />
+      <div>
+        <h1>Max Shen</h1>
+        <p class="hero-role">Computer Science Student &mdash; Yuan Ze University</p>
+      </div>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <p class="section-label">02 / skills</p>
-    <h2>Skills</h2>
+      <p class="hero-bio">
+        Passionate about software development, algorithms, and building things that matter.
+        I enjoy working across the stack &mdash; from low-level C++ to Python data pipelines and web interfaces.
+        Currently exploring Git, GitHub workflows, and collaborative engineering practices.
+      </p>
 
-    <div class="skills-group">
-      <p class="skills-group-label">Languages</p>
-      <div class="skill-chips">
-        <span class="chip"><span class="chip-dot" style="background:#00599c;"></span>C++</span>
-        <span class="chip"><span class="chip-dot" style="background:#3572a5;"></span>Python</span>
-        <span class="chip"><span class="chip-dot" style="background:#f1e05a;"></span>HTML</span>
-        <span class="chip"><span class="chip-dot" style="background:#563d7c;"></span>CSS</span>
-        <span class="chip"><span class="chip-dot" style="background:#f7df1e;"></span>JavaScript</span>
-        <span class="chip"><span class="chip-dot" style="background:#3fb950;"></span>Markdown</span>
-        <span class="chip"><span class="chip-dot" style="background:#e38c00;"></span>SQL</span>
+      <div class="hero-links">
+        <a class="icon-btn" href="https://github.com/max-shen378" target="_blank">
+          <!-- GitHub icon -->
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836a9.59 9.59 0 012.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+          </svg>
+          GitHub
+        </a>
+        <a class="icon-btn" href="mailto:max.shen0306@gmail.com">
+          <!-- Email icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/>
+          </svg>
+          Email
+        </a>
+        <a class="icon-btn" href="https://github.com/max-shen378/11402_CS351" target="_blank">
+          <!-- Book icon -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+          </svg>
+          CS351
+        </a>
       </div>
     </div>
 
-    <div class="skills-group">
-      <p class="skills-group-label">Tools &amp; Platforms</p>
-      <div class="skill-chips">
-        <span class="chip"><span class="chip-dot" style="background:#f05032;"></span>Git</span>
-        <span class="chip"><span class="chip-dot" style="background:#58a6ff;"></span>GitHub</span>
-        <span class="chip"><span class="chip-dot" style="background:#58a6ff;"></span>GitHub Pages</span>
-        <span class="chip"><span class="chip-dot" style="background:#4584b6;"></span>VS Code</span>
+    <hr />
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <p class="section-eyebrow">Skills</p>
+      <div class="skills-stack">
+
+        <div class="skill-row">
+          <span class="skill-row-label">Languages</span>
+          <div class="chips">
+            <span class="chip"><span class="chip-dot" style="background:#00599c;"></span>C++</span>
+            <span class="chip"><span class="chip-dot" style="background:#3572a5;"></span>Python</span>
+            <span class="chip"><span class="chip-dot" style="background:#e34c26;"></span>HTML</span>
+            <span class="chip"><span class="chip-dot" style="background:#563d7c;"></span>CSS</span>
+            <span class="chip"><span class="chip-dot" style="background:#f1c40f;"></span>JavaScript</span>
+            <span class="chip"><span class="chip-dot" style="background:#22c55e;"></span>Markdown</span>
+            <span class="chip"><span class="chip-dot" style="background:#e38c00;"></span>SQL</span>
+          </div>
+        </div>
+
+        <div class="skill-row">
+          <span class="skill-row-label">Tools &amp; Platforms</span>
+          <div class="chips">
+            <span class="chip"><span class="chip-dot" style="background:#f05032;"></span>Git</span>
+            <span class="chip"><span class="chip-dot" style="background:#111;"></span>GitHub</span>
+            <span class="chip"><span class="chip-dot" style="background:#0055d4;"></span>GitHub Pages</span>
+            <span class="chip"><span class="chip-dot" style="background:#007acc;"></span>VS Code</span>
+          </div>
+        </div>
+
+        <div class="skill-row">
+          <span class="skill-row-label">Concepts</span>
+          <div class="chips">
+            <span class="chip">Data Structures</span>
+            <span class="chip">Algorithms</span>
+            <span class="chip">Big Data Analysis</span>
+            <span class="chip">REST APIs</span>
+            <span class="chip">Version Control</span>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </section>
 
-    <div class="skills-group">
-      <p class="skills-group-label">Concepts</p>
-      <div class="skill-chips">
-        <span class="chip">Data Structures</span>
-        <span class="chip">Algorithms</span>
-        <span class="chip">Big Data Analysis</span>
-        <span class="chip">REST APIs</span>
-        <span class="chip">Version Control</span>
+    <hr />
+
+    <!-- WORK -->
+    <section id="work">
+      <p class="section-eyebrow">Work</p>
+      <h2>Selected Projects</h2>
+      <div class="project-list">
+
+        <!-- Project 1 -->
+        <a class="project-card" href="https://github.com/max-shen378/clash-big-data" target="_blank">
+          <div class="project-banner" style="background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0ea5e9 100%);">
+            📊
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <span class="project-title">Clash Big Data</span>
+              <span class="arrow-icon">↗</span>
+            </div>
+            <p class="project-desc">
+              Full-stack big data analysis platform for Clash game statistics. Features an automated data pipeline, REST API backend, and interactive web frontend to ingest, process, and visualize player trends.
+            </p>
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">HTML / CSS</span>
+              <span class="tag">Data Pipeline</span>
+              <span class="tag">REST API</span>
+              <span class="tag">Big Data</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 2 -->
+        <a class="project-card" href="https://github.com/max-shen378/File_Compressor_Converter" target="_blank">
+          <div class="project-banner" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #7c3aed 100%);">
+            📄
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <span class="project-title">File Compressor &amp; Converter</span>
+              <span class="arrow-icon">↗</span>
+            </div>
+            <p class="project-desc">
+              Browser-based tool for compressing and converting files without a server. Uses Web Workers for background processing, supports batch compression with adjustable levels, async format conversion, and auto-download.
+            </p>
+            <div class="project-tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Web Workers</span>
+              <span class="tag">Team Project</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project 3 -->
+        <a class="project-card" href="https://github.com/max-shen378/11402_CS5351_ProjectB" target="_blank">
+          <div class="project-banner" style="background: linear-gradient(135deg, #0d1117 0%, #1c2333 50%, #238636 100%);">
+            🗃️
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <span class="project-title">CSV Query Engine</span>
+              <span class="arrow-icon">↗</span>
+            </div>
+            <p class="project-desc">
+              Lightweight in-memory database engine built in C++. Ingests CSV files into typed tables and executes SQL-like queries — supporting WHERE filters, aggregations (COUNT, SUM, AVG, MIN, MAX), multi-table JOINs, and ORDER BY.
+            </p>
+            <div class="project-tags">
+              <span class="tag">C++</span>
+              <span class="tag">SQL</span>
+              <span class="tag">Data Structures</span>
+              <span class="tag">Database</span>
+            </div>
+          </div>
+        </a>
+
       </div>
-    </div>
-  </section>
+    </section>
 
-  <hr class="divider" />
+    <hr />
 
-  <!-- REPOS -->
-  <section id="repos">
-    <p class="section-label">03 / repositories</p>
-    <h2>My Repositories</h2>
-    <div class="repo-grid">
-      <a class="repo-card" href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">
-        <span class="repo-card-title">max-shen378.github.io</span>
-        <span class="repo-card-desc">Personal GitHub Pages website — my public home on the web, built with HTML &amp; CSS.</span>
-        <span class="repo-badge"><span class="dot" style="background:#f1e05a;"></span> HTML</span>
-      </a>
-      <a class="repo-card" href="https://github.com/max-shen378/11402_CS351" target="_blank">
-        <span class="repo-card-title">11402_CS351</span>
-        <span class="repo-card-desc">Course repository for CS351 — contains assignments, notes, and documentation in Markdown.</span>
-        <span class="repo-badge"><span class="dot" style="background:#e34c26;"></span> Markdown / Docs</span>
-      </a>
-    </div>
-  </section>
+    <!-- REPOS -->
+    <section id="repos">
+      <p class="section-eyebrow">Repositories</p>
+      <h2>CS351 Course Repos</h2>
+      <div class="repo-grid">
+        <a class="repo-card" href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">
+          <span class="repo-name">max-shen378.github.io</span>
+          <span class="repo-desc">Personal GitHub Pages site — this website.</span>
+          <span class="repo-lang"><span class="lang-dot" style="background:#e34c26;"></span>HTML</span>
+        </a>
+        <a class="repo-card" href="https://github.com/max-shen378/11402_CS351" target="_blank">
+          <span class="repo-name">11402_CS351</span>
+          <span class="repo-desc">Course repository with assignments and Markdown docs.</span>
+          <span class="repo-lang"><span class="lang-dot" style="background:#083fa1;"></span>Markdown</span>
+        </a>
+      </div>
+    </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>
-      Built by <a href="https://github.com/max-shen378">@max-shen378</a> &nbsp;&middot;&nbsp;
-      Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a> &nbsp;&middot;&nbsp;
-      <a href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">View Source</a>
-    </p>
-  </footer>
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-inner">
+        <span class="footer-copy">© 2026 Max Shen</span>
+        <div class="footer-links">
+          <a href="https://github.com/max-shen378" target="_blank">GitHub</a>
+          <a href="mailto:max.shen0306@gmail.com">Email</a>
+          <a href="https://github.com/max-shen378/max-shen378.github.io" target="_blank">Source</a>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /.page -->
 
 </body>
 </html>
